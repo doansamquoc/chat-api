@@ -1,9 +1,9 @@
 package org.sam.chatapi.controller;
 
-import org.sam.chatapi.dto.TokenDto;
 import org.sam.chatapi.dto.api.ApiResponse;
 import org.sam.chatapi.dto.request.LoginRequest;
 import org.sam.chatapi.dto.request.UserCreationRequest;
+import org.sam.chatapi.dto.response.AuthResponse;
 import org.sam.chatapi.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -21,13 +21,13 @@ public class AuthenticationController {
 
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.OK)
-	ApiResponse<TokenDto> login(@Valid @RequestBody LoginRequest request) {
+	ApiResponse<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
 		return ApiResponse.of(service.login(request));
 	}
 
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
-	ApiResponse<TokenDto> register(@Valid @RequestBody UserCreationRequest request) {
+	ApiResponse<AuthResponse> register(@Valid @RequestBody UserCreationRequest request) {
 		return ApiResponse.of(service.register(request));
 	}
 }

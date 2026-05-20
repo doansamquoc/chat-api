@@ -1,5 +1,6 @@
 package org.sam.chatapi.dto;
 
+import org.sam.chatapi.entity.User;
 import org.sam.chatapi.util.UserUtils;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -16,36 +17,20 @@ import java.util.Set;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CustomUserDetails implements UserDetails {
-	Long id;
-	String username;
-	String password;
-	String email;
-	Collection<? extends GrantedAuthority> authorities;
-
-	public CustomUserDetails(UserDto user) {
-		this.id = user.getId();
-		this.username = user.getUsername();
-		this.password = user.getPassword();
-		this.email = user.getEmail();
-		this.authorities = Set.of(UserUtils.toAuthority(user.getRole().name()));
-	}
-
-	public UserDto getUser() {
-		return UserDto.builder().id(id).username(username).email(email).role(UserUtils.toRole(authorities)).build();
-	}
+	User user;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.authorities;
+		return Set.of(UserUtils.toAuthority(this.user.getRole().name()));
 	}
 
 	@Override
 	public String getPassword() {
-		return this.password;
+		return this.user.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return this.username;
+		return this.user.getUsername();
 	}
 }

@@ -2,13 +2,15 @@ package org.sam.chatapi.repository;
 
 import org.sam.chatapi.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-	Optional<User> findByUsernameOrEmail(String username, String email);
+	@Query("SELECT u FROM User u WHERE u.username = :identifier OR u.email = :identifier")
+	Optional<User> findByIdentifier(String identifier);
 
 	boolean existsByEmail(String email);
 }

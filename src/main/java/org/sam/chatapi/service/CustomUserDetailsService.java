@@ -1,10 +1,10 @@
 package org.sam.chatapi.service;
 
 import org.sam.chatapi.dto.CustomUserDetails;
-import org.sam.chatapi.dto.UserDto;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.sam.chatapi.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,7 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
-		UserDto user = userService.findByIdentifier(identifier).orElseThrow(() -> new UsernameNotFoundException(identifier));
+		User user = userService.findByIdentifier(identifier).orElseThrow(() -> new UsernameNotFoundException(identifier));
 		return new CustomUserDetails(user);
 	}
 }

@@ -1,6 +1,5 @@
 package org.sam.chatapi.service;
 
-import org.sam.chatapi.dto.UserDto;
 import org.sam.chatapi.dto.request.UserCreationRequest;
 import org.sam.chatapi.entity.User;
 import org.sam.chatapi.mapper.UserMapper;
@@ -20,18 +19,18 @@ public class UserService {
 	UserMapper mapper;
 	UserRepository repository;
 
-	public UserDto create(UserCreationRequest request) {
+	public User create(UserCreationRequest request) {
 		User user = mapper.toEntity(request);
 		user.setUsername(UserUtils.generateUsername(request.email()));
 		return save(user);
 	}
 
-	public UserDto save(User user) {
-		return mapper.toDto(repository.save(user));
+	public User save(User user) {
+		return repository.save(user);
 	}
 
-	public Optional<UserDto> findByIdentifier(String identifier) {
-		return repository.findByUsernameOrEmail(identifier, identifier).map(mapper::toDto);
+	public Optional<User> findByIdentifier(String identifier) {
+		return repository.findByIdentifier(identifier);
 	}
 
 	public boolean existsByEmail(String email) {

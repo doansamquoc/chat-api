@@ -1,13 +1,14 @@
 package org.sam.chatapi.service;
 
 import org.sam.chatapi.dto.CustomUserDetails;
-import org.sam.chatapi.dto.TokenDto;
-import org.sam.chatapi.dto.UserDto;
 import org.sam.chatapi.dto.request.LoginRequest;
 import org.sam.chatapi.dto.request.UserCreationRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.sam.chatapi.dto.response.AuthResponse;
+import org.sam.chatapi.entity.User;
+import org.sam.chatapi.mapper.UserMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,8 +20,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationService {
-	UserService userService;
+	UserMapper userMapper;
 	JwtService jwtService;
+	UserService userService;
 	PasswordEncoder passwordEncoder;
 	AuthenticationManager authManager;
 
@@ -29,24 +31,26 @@ public class AuthenticationService {
 		return (CustomUserDetails) auth.getPrincipal();
 	}
 
-	public TokenDto login(LoginRequest request) {
+	public AuthResponse login(LoginRequest request) {
 		CustomUserDetails userDetails = authenticate(request.identifier(), request.password());
-		UserDto userDto = userDetails.getUser();
-		return generateToken(userDto);
+		User user = userDetails.getUser();
+		return enrichAuthResponse(generateToken(user), user);
 	}
 
-	public TokenDto register(UserCreationRequest request) {
+	public AuthResponse register(UserCreationRequest request) {
 		if (userService.existsByEmail(request.email())) {
 			throw new DataIntegrityViolationException("Email already exists");
 		}
 		String hashedPassword = passwordEncoder.encode(request.password());
-		UserDto user = userService.create(new UserCreationRequest(request.email(), hashedPassword, request.displayName()));
-		return generateToken(user);
+		User user = userService.create(new UserCreationRequest(request.email(), hashedPassword, request.displayName()));
+		return enrichAuthResponse(generateToken(user), user);
 	}
 
+	private String generateToken(User user) {
+		return jwtService.create(user);
+	}
 
-	private TokenDto generateToken(UserDto userDto) {
-		String accessToken = jwtService.create(userDto);
-		return new TokenDto(accessToken);
+	private AuthResponse enrichAuthResponse(String token, User user) {
+		return new AuthResponse(token, userMapper.toDto(user));
 	}
 }

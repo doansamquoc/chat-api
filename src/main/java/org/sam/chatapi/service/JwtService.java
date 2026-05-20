@@ -1,6 +1,6 @@
 package org.sam.chatapi.service;
 
-import org.sam.chatapi.dto.UserDto;
+import org.sam.chatapi.entity.User;
 import org.sam.chatapi.property.AppProperties;
 import org.sam.chatapi.util.UUIDUtils;
 import com.nimbusds.jose.*;
@@ -24,7 +24,7 @@ public class JwtService {
 	SecretKey secretKey;
 	AppProperties props;
 
-	public String create(UserDto user) {
+	public String create(User user) {
 		JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
 		Payload payload = generatePayload(user);
 		JWSObject jwsObject = new JWSObject(header, payload);
@@ -45,7 +45,7 @@ public class JwtService {
 		// Push it into Redis
 	}
 
-	private Payload generatePayload(UserDto user) {
+	private Payload generatePayload(User user) {
 		JWTClaimsSet claims = generateClaims(user.getId());
 		return new Payload(claims.toJSONObject());
 	}
