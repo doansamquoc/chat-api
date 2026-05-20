@@ -35,7 +35,7 @@ public class UserUtils {
 	}
 
 	/**
-	 * Once role in authorities, just use findFirst to get role
+	 * Only one role in authorities, just use findFirst to get role
 	 *
 	 * @param authorities GrantedAuthority Collection
 	 * @return Role

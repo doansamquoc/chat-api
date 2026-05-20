@@ -1,6 +1,7 @@
 package org.sam.chatapi.controller;
 
 import org.sam.chatapi.dto.TokenDto;
+import org.sam.chatapi.dto.api.ApiResponse;
 import org.sam.chatapi.dto.request.LoginRequest;
 import org.sam.chatapi.dto.request.UserCreationRequest;
 import org.sam.chatapi.service.AuthenticationService;
@@ -20,13 +21,13 @@ public class AuthenticationController {
 
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.OK)
-	TokenDto login(@Valid @RequestBody LoginRequest request) {
-		return service.login(request);
+	ApiResponse<TokenDto> login(@Valid @RequestBody LoginRequest request) {
+		return ApiResponse.of(service.login(request));
 	}
 
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
-	TokenDto register(@Valid @RequestBody UserCreationRequest request) {
-		return service.register(request);
+	ApiResponse<TokenDto> register(@Valid @RequestBody UserCreationRequest request) {
+		return ApiResponse.of(service.register(request));
 	}
 }
