@@ -1,17 +1,16 @@
 package org.sam.chatapi.service;
 
-import org.sam.chatapi.dto.CustomUserDetails;
-import org.sam.chatapi.dto.request.LoginRequest;
-import org.sam.chatapi.dto.request.UserCreationRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.sam.chatapi.dto.CustomUserDetails;
+import org.sam.chatapi.dto.request.LoginRequest;
+import org.sam.chatapi.dto.request.UserCreationRequest;
 import org.sam.chatapi.dto.response.AuthResponse;
 import org.sam.chatapi.entity.User;
 import org.sam.chatapi.enums.ErrorCode;
 import org.sam.chatapi.exception.BusinessException;
 import org.sam.chatapi.mapper.UserMapper;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

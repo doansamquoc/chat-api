@@ -1,10 +1,5 @@
 package org.sam.chatapi.service;
 
-import org.sam.chatapi.entity.User;
-import org.sam.chatapi.enums.ErrorCode;
-import org.sam.chatapi.exception.BusinessException;
-import org.sam.chatapi.property.AppProperties;
-import org.sam.chatapi.util.UUIDUtils;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
@@ -12,7 +7,11 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.oauth2.jwt.JwtException;
+import org.sam.chatapi.entity.User;
+import org.sam.chatapi.enums.ErrorCode;
+import org.sam.chatapi.exception.BusinessException;
+import org.sam.chatapi.property.AppProperties;
+import org.sam.chatapi.util.UUIDUtils;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
