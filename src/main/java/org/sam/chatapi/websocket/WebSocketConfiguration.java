@@ -1,4 +1,4 @@
-package chatapi.websocket;
+package org.sam.chatapi.websocket;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +17,13 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(@NonNull StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").withSockJS();
+        registry.addEndpoint("/ws").setAllowedOriginPatterns("*");
+        registry.addEndpoint("/ws").setAllowedOriginPatterns("*").withSockJS();
     }
+
+    @Override
     public void configureMessageBroker(@NonNull MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes("/app");
-        registry.enableSimpleBroker("/topic",  "/queue");
+        registry.enableSimpleBroker("/topic", "/queue");
     }
 }

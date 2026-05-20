@@ -1,0 +1,15 @@
+version: "8.3"
+services:
+    chat-posgresql:
+        container_name: chat-postgresql
+        image: postgres:17-alpine
+        ports:
+            -   "5432:5432"
+        volumes:
+            -   chat-postgresql-data:/var/lib/postgresql
+        environment:
+            POSTGRES_DB: chat
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: 123456
+volumes:
+    chat-postgresql-data:

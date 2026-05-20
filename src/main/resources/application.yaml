@@ -2,7 +2,29 @@ spring:
   application:
     name: Chat API
   datasource:
-    url: jdbc:postgresql://localhost:8080/chat
+    url: jdbc:postgresql://localhost:5432/chat
     username: postgres
     password: 123456
     driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 50
+  flyway:
+    enabled: true
+    baseline-version: 0
+    baseline-on-migrate: true
+
+logging:
+  level:
+    org.springframework.web.socket: DEBUG
+    org.springframework.messaging: DEBUG
+
+app:
+  secret-key: 09402kjkjshgfdksdjfhg0aodow03kfjdgkjfg203
+  access-token-expiration: 604800000 # 7 days (test)
+  refresh-token-expiration: 1296000000 # 15 days
