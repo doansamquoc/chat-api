@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.sam.chatapi.dto.response.AuthResponse;
 import org.sam.chatapi.entity.User;
+import org.sam.chatapi.enums.ErrorCode;
+import org.sam.chatapi.exception.BusinessException;
 import org.sam.chatapi.mapper.UserMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,9 +40,7 @@ public class AuthenticationService {
 	}
 
 	public AuthResponse register(UserCreationRequest request) {
-		if (userService.existsByEmail(request.email())) {
-			throw new DataIntegrityViolationException("Email already exists");
-		}
+		if (userService.existsByEmail(request.email())) throw new BusinessException(ErrorCode.USER_EMAIL_EXISTS);
 		String hashedPassword = passwordEncoder.encode(request.password());
 		User user = userService.create(new UserCreationRequest(request.email(), hashedPassword, request.displayName()));
 		return enrichAuthResponse(generateToken(user), user);

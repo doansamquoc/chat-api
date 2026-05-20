@@ -1,6 +1,8 @@
 package org.sam.chatapi.service;
 
 import org.sam.chatapi.entity.User;
+import org.sam.chatapi.enums.ErrorCode;
+import org.sam.chatapi.exception.BusinessException;
 import org.sam.chatapi.property.AppProperties;
 import org.sam.chatapi.util.UUIDUtils;
 import com.nimbusds.jose.*;
@@ -34,9 +36,7 @@ public class JwtService {
 			return jwsObject.serialize();
 		} catch (JOSEException e) {
 			log.error("Create Access Token Failed: {}", e.getMessage());
-
-			// TODO: Should be used BusinessException instead
-			throw new JwtException("Create Access Token Failed");
+			throw new BusinessException(ErrorCode.TOKEN_GENERATE_FAILED);
 		}
 	}
 
