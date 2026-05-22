@@ -26,7 +26,7 @@ public class WebSocketEventListener {
 		if (accessor.getSessionAttributes() != null) {
 			String username = (String) accessor.getSessionAttributes().get("username");
 			if (username != null) {
-				SendMessageRequest request = new SendMessageRequest(username, "Leave room", MessageType.LEAVE, Instant.now());
+				SendMessageRequest request = new SendMessageRequest(username, "Leave room", MessageType.SYSTEM, Instant.now());
 				template.convertAndSend("/topic/public", request);
 			}
 		}
@@ -38,7 +38,7 @@ public class WebSocketEventListener {
 		if (accessor.getSessionAttributes() != null) {
 			String username = (String) accessor.getSessionAttributes().get("username");
 			if (username != null) {
-				SendMessageRequest request = new SendMessageRequest(username, "Join room", MessageType.JOIN, Instant.now());
+				SendMessageRequest request = new SendMessageRequest(username, "Join room", MessageType.SYSTEM, Instant.now());
 				template.convertAndSend("/topic/public", request);
 			}
 		}

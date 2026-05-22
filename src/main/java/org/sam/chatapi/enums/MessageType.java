@@ -1,5 +1,5 @@
 package org.sam.chatapi.enums;
 
 public enum MessageType {
-	CHAT, JOIN, LEAVE
+	TEXT, IMAGE, VIDEO, SYSTEM
 }
