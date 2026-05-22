@@ -35,9 +35,9 @@ public class Conversation extends BaseEntity {
 	@Column(name = "avatar_url")
 	String avatarUrl;
 
-	@OneToMany(mappedBy = "conversation", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "conversation", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<ConversationMember> members = new LinkedHashSet<>();
 
-	@OneToMany(mappedBy = "conversation", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "conversation", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<Message> messages = new LinkedHashSet<>();
 }
