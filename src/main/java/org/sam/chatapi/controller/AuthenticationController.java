@@ -1,6 +1,5 @@
 package org.sam.chatapi.controller;
 
-import org.sam.chatapi.dto.api.ApiResponse;
 import org.sam.chatapi.dto.request.LoginRequest;
 import org.sam.chatapi.dto.request.UserCreationRequest;
 import org.sam.chatapi.dto.response.AuthResponse;
@@ -17,17 +16,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationController {
-	AuthenticationService service;
+    AuthenticationService service;
 
-	@PostMapping("/login")
-	@ResponseStatus(HttpStatus.OK)
-	ApiResponse<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
-		return ApiResponse.of(service.login(request));
-	}
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+    AuthResponse login(@Valid @RequestBody LoginRequest request) {
+        return service.login(request);
+    }
 
-	@PostMapping("/register")
-	@ResponseStatus(HttpStatus.CREATED)
-	ApiResponse<AuthResponse> register(@Valid @RequestBody UserCreationRequest request) {
-		return ApiResponse.of(service.register(request));
-	}
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
+    AuthResponse register(@Valid @RequestBody UserCreationRequest request) {
+        return service.register(request);
+    }
 }
