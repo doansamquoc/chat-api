@@ -3,7 +3,7 @@ package org.sam.chatapi.controller;
 import org.sam.chatapi.dto.request.LoginRequest;
 import org.sam.chatapi.dto.request.UserCreationRequest;
 import org.sam.chatapi.dto.response.AuthResponse;
-import org.sam.chatapi.service.AuthenticationService;
+import org.sam.chatapi.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AuthenticationController {
-    AuthenticationService service;
+public class AuthController {
+    AuthService service;
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
