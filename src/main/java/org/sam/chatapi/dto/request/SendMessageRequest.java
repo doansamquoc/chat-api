@@ -5,9 +5,8 @@ import org.sam.chatapi.enums.MessageType;
 import java.time.Instant;
 
 public record SendMessageRequest(
-	String sender,
-	String message,
-	MessageType type,
-	Instant timestamp
-) {
-}
+    MessageType type,
+    String content,
+    Long replyToId,
+    Instant timestamp
+) {}

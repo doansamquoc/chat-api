@@ -1,9 +1,9 @@
 package org.sam.chatapi.service;
 
-import org.sam.chatapi.dto.request.SendMessageRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.sam.chatapi.dto.request.SendMessageRequest;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ChatService {
-	SimpMessagingTemplate template;
+    SimpMessagingTemplate template;
 
-	public void processAndBroadcastMessage(SendMessageRequest request) {
-		template.convertAndSend("/topic/public", request);
-	}
+    public void sendMessage(Long userId, Long conversationId, SendMessageRequest request) {
+        template.convertAndSend("/topic/public", request);
+    }
 }
